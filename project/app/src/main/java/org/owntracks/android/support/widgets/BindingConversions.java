@@ -1,5 +1,8 @@
 package org.owntracks.android.support.widgets;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.res.Resources;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -13,6 +16,7 @@ import com.google.android.gms.location.Geofence;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.owntracks.android.R;
+import org.owntracks.android.services.LocationProcessor;
 import org.owntracks.android.services.MessageProcessor;
 import org.owntracks.android.services.MessageProcessorEndpointHttp;
 import org.owntracks.android.services.MessageProcessorEndpointMqtt;
@@ -36,8 +40,31 @@ public class BindingConversions {
     public static String convertToStringZeroIsEmpty(@Nullable Integer d) {
         return d != null && d > 0 ? d.toString() : EMPTY_STRING;
     }
+    @BindingConversion
+    @InverseMethod("convertToStringLocationProcessorMonitoring")
+    public static int convertToLocationProcessorMonitoring(String d){
+        if (d == Resources.getSystem().getString(R.string.monitoring_signifficant))
+            return LocationProcessor.MONITORING_SIGNIFFICANT;
 
+        if (d == Resources.getSystem().getString(R.string.monitoring_move))
+            return LocationProcessor.MONITORING_MOVE;
 
+        return LocationProcessor.MONITORING_MANUAL;
+
+    }
+    @BindingConversion
+    public static String convertToStringLocationProcessorMonitoring(int d){
+        switch (d) {
+            case LocationProcessor.MONITORING_MANUAL:
+                return "Manual monitoring mode";
+            case LocationProcessor.MONITORING_MOVE:
+                return "Move monitoring mode";
+            case LocationProcessor.MONITORING_SIGNIFFICANT:
+                return "Significant changes monitoring mode";
+            default:
+                return "";
+        }
+    }
     @BindingConversion
     public static String convertToString(@Nullable Long d) {
         return d != null ? d.toString() : EMPTY_STRING;

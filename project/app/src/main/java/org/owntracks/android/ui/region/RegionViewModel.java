@@ -1,18 +1,25 @@
 package org.owntracks.android.ui.region;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
 import org.owntracks.android.data.WaypointModel;
 import org.owntracks.android.data.repos.LocationRepo;
 import org.owntracks.android.data.repos.WaypointsRepo;
 import org.owntracks.android.injection.scopes.PerActivity;
+import org.owntracks.android.support.Preferences;
 import org.owntracks.android.ui.base.viewmodel.BaseViewModel;
+import org.owntracks.android.ui.preferences.connection.dialog.ConnectionModeDialogViewModel;
+import org.owntracks.android.ui.region.dialog.ReportingModeDialogViewModel;
 
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.Bindable;
+
+import static org.owntracks.android.App.getContext;
 
 @PerActivity
 public class RegionViewModel extends BaseViewModel<RegionMvvm.View> implements RegionMvvm.ViewModel<RegionMvvm.View> {
@@ -45,6 +52,19 @@ public class RegionViewModel extends BaseViewModel<RegionMvvm.View> implements R
             }
         }
         setWaypoint(w);
+    }
+
+    @Override
+    public void onReportModeClick() {
+        getView().showModeDialog();
+    }
+
+    @Override
+    public ReportingModeDialogViewModel getModeDialogViewModel() {
+        if (waypoint == null){
+            waypoint = new WaypointModel();
+        }
+        return new ReportingModeDialogViewModel(waypoint);
     }
 
     public boolean canSaveWaypoint() {

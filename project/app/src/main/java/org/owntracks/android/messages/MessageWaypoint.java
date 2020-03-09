@@ -22,6 +22,16 @@ public class MessageWaypoint extends MessageBase{
     private double lat;
     private long tst;
 
+    public int getReportingMode() {
+        return reportingMode;
+    }
+
+    public void setReportingMode(int reportingMode) {
+        this.reportingMode = reportingMode;
+    }
+
+    private int reportingMode;
+
     // Optional types for optional values
     private Integer rad;
 

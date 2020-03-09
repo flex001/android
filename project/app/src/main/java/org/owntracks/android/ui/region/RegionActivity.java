@@ -3,18 +3,24 @@ package org.owntracks.android.ui.region;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import org.owntracks.android.R;
 import org.owntracks.android.databinding.UiRegionBinding;
+import org.owntracks.android.databinding.UiRegionReportingModeBinding;
 import org.owntracks.android.ui.base.BaseActivity;
+import org.owntracks.android.ui.region.dialog.ReportingModeDialogViewModel;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.databinding.DataBindingUtil;
 
 public class RegionActivity extends BaseActivity<UiRegionBinding, RegionMvvm.ViewModel> implements RegionMvvm.View {
 
     private MenuItem saveButton;
+    private ReportingModeDialogViewModel activeDialogViewModel ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +60,31 @@ public class RegionActivity extends BaseActivity<UiRegionBinding, RegionMvvm.Vie
         this.saveButton = menu.findItem(R.id.save);
         conditionallyEnableSaveButton();
         return true;
+    }
+
+    @Override
+    public void showModeDialog() {
+
+        UiRegionReportingModeBinding dialogBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.ui_region_reporting_mode,  null, false);
+
+        dialogBinding.setVm(viewModel.getModeDialogViewModel());
+        activeDialogViewModel = dialogBinding.getVm();
+
+
+        new AlertDialog.Builder(this)
+                .setView(dialogBinding.getRoot())
+                .setTitle(R.string.mode_heading)
+                .setPositiveButton(R.string.accept, dialogBinding.getVm())
+                .setNegativeButton(R.string.cancel, dialogBinding.getVm())
+                .show();
+
+        //new MaterialDialog.Builder(this)
+        //         .customView(dialogBinding.getRoot(), true)
+        //         .title(R.string.mode_heading)
+        //         .positiveText(R.string.accept)
+        //         .negativeText(R.string.cancel)
+        //         .onPositive(dialogBinding.getVm())
+        //        .show();
     }
 
     @Override

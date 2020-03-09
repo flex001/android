@@ -10,6 +10,7 @@ import org.owntracks.android.data.MyObjectBox;
 import org.owntracks.android.data.WaypointModel;
 import org.owntracks.android.data.WaypointModel_;
 import org.owntracks.android.injection.qualifier.AppContext;
+import org.owntracks.android.services.LocationProcessor;
 import org.owntracks.android.support.Preferences;
 
 import java.util.List;
@@ -72,7 +73,8 @@ public class ObjectboxWaypointsRepo extends WaypointsRepo  {
                                     cursor.getString(cursor.getColumnIndex("DESCRIPTION")),
                                     cursor.getDouble(cursor.getColumnIndex("GEOFENCE_LATITUDE")),
                                     cursor.getDouble(cursor.getColumnIndex("GEOFENCE_LONGITUDE")),
-                                    cursor.getInt(cursor.getColumnIndex("GEOFENCE_RADIUS")), 0, 0);
+                                    cursor.getInt(cursor.getColumnIndex("GEOFENCE_RADIUS")), 0, 0,
+                                    LocationProcessor.MONITORING_MANUAL);
 
                             Timber.v("Migration for model %s", w.toString());
                             insert_impl(w);

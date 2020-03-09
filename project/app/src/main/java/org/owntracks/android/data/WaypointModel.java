@@ -12,16 +12,17 @@ import io.objectbox.annotation.Id;
 import io.objectbox.annotation.Index;
 import io.objectbox.annotation.Unique;
 import org.owntracks.android.BR;
+import org.owntracks.android.services.LocationProcessor;
 
 @Entity
 public class WaypointModel extends BaseObservable {
-
     @Id
     private long id;
     private String description = "";
     private double geofenceLatitude = 0.0;
     private double geofenceLongitude = 0.0;
     private int geofenceRadius = 0;
+    private int reportingMode = LocationProcessor.MONITORING_MANUAL;
     private long lastTriggered = 0;
     private int lastTransition = 0;
     @Unique
@@ -32,10 +33,11 @@ public class WaypointModel extends BaseObservable {
         setTst(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
     }
 
-    public WaypointModel(long id, long tst, @NonNull String description, double geofenceLatitude, double geofenceLongitude, int geofenceRadius, int lastTransition, long lastTriggered) {
+    public WaypointModel(long id, long tst, @NonNull String description, double geofenceLatitude, double geofenceLongitude, int geofenceRadius, int lastTransition, long lastTriggered, int reportingMode) {
         this.id = id;
         this.tst = tst;
         this.description = description;
+        this.reportingMode = reportingMode;
         setGeofenceLongitude(geofenceLongitude);
         setGeofenceLatitude(geofenceLatitude);
         this.geofenceLongitude = geofenceLongitude;
@@ -59,6 +61,9 @@ public class WaypointModel extends BaseObservable {
     private void setTst(long tst) {
         this.tst = tst;
     }
+
+    public int getReportingMode() { return reportingMode; }
+    public void setReportingMode(int reportingMode) { this.reportingMode = reportingMode; }
 
     @NonNull
     public String getDescription() {

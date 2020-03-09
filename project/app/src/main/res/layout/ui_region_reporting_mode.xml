@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<data>
+
+		<import type="android.view.View"/>
+
+		<variable
+			name="vm"
+			type="org.owntracks.android.ui.region.dialog.ReportingModeDialogViewModel"/>
+	</data>
+
+
+	<RadioGroup
+		style="@style/DialogView"
+
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:checkedButton="@={vm.mode}">
+
+		<androidx.appcompat.widget.AppCompatRadioButton
+			android:id="@+id/radioModeMoveReporting"
+			style="@style/RadioGroupItem"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/monitoring_move"
+			android:textSize="@dimen/listitem_textsize" />
+
+		<androidx.appcompat.widget.AppCompatRadioButton
+			android:id="@+id/radioModeSignificantReporting"
+			style="@style/RadioGroupItem"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/monitoring_signifficant"
+			android:textSize="@dimen/listitem_textsize"
+			/>
+	</RadioGroup>
+</layout>
