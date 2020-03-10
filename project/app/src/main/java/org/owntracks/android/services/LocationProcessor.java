@@ -138,6 +138,10 @@ public class LocationProcessor {
     public void onWaypointTransition(@NonNull WaypointModel w, @NonNull final Location l, final int transition, @NonNull final String trigger) {
         Timber.v("geofence %s/%s transition:%s, trigger:%s", w.getTst(), w.getDescription(), transition == Geofence.GEOFENCE_TRANSITION_ENTER ? "enter" : "exit", trigger);
 
+        if (transition == Geofence.GEOFENCE_TRANSITION_ENTER){
+            preferences.setMonitoring(w.getReportingMode());
+        }
+
         if (ignoreLowAccuracy(l)) {
             Timber.d("ignoring transition: low accuracy ");
             return;

@@ -61,9 +61,6 @@ public class RegionViewModel extends BaseViewModel<RegionMvvm.View> implements R
 
     @Override
     public ReportingModeDialogViewModel getModeDialogViewModel() {
-        if (waypoint == null){
-            waypoint = new WaypointModel();
-        }
         return new ReportingModeDialogViewModel(waypoint);
     }
 
